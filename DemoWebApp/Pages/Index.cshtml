@@ -1,0 +1,58 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+	<h1 class="display-4" id="welcome">Welcome</h1>
+</div>
+
+<div id="noDisplay" style="display: none">#noDisplay</div>
+<div id="noVisible" style="visibility: hidden">#noVisible</div>
+<div id="visibleAfter10Secs" style="display: none">#visibleAfter10Secs</div>
+<div id="demo"></div>
+
+<button id="privacy" onclick="window.location.href = '/Privacy'">Privacy</button>
+<br />
+hfddddddddddddddddd
+<br />
+
+<select id="goTo" name="goTo">
+	<option>1</option>
+	<option>2</option>
+	<option>3</option>
+</select>
+
+@section scripts{
+	<script>
+		const html = `<div id="existAfter10Secs">#existAfter10Secs</div>`;
+		setTimeout(() => {
+			document.getElementById("demo").innerHTML = html;
+		}, 10000)
+
+		setTimeout(() => {
+			var x = document.getElementById("visibleAfter10Secs");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}, 10000)
+	</script>
+
+	<script>
+		var initialised = false;
+		setTimeout(() => {
+			var newElement = document.createElement("p");
+			newElement.textContent = "Hello from JavaScript!";
+			document.body.appendChild(newElement);
+			initialised = true;
+		}, 4000);
+
+		document.getElementById("goTo").addEventListener("change", () => {
+			console.log("Hi");
+			window.location.href = '/Home/Privacy';
+		})
+	</script>
+}
