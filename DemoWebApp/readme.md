@@ -1,0 +1,1 @@
+This is a web app to demonstrate Selenium automation scenarios and quircks

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +48,34 @@ namespace DemoWebApp
 
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapGet("/testing", ctx =>
+				{
+					text = string.Empty;
+					append($"environment is {env.EnvironmentName}");
+					append($"app is {env.ApplicationName}");
+					append(
+						"AppContext.BaseDirectory",
+						AppContext.BaseDirectory,
+						"AppDomain.CurrentDomain.BaseDirectory",
+						AppDomain.CurrentDomain.BaseDirectory,
+						"env.ContentRootPath",
+						env.ContentRootPath,
+						"System.IO.Directory.GetCurrentDirectory()",
+						System.IO.Directory.GetCurrentDirectory());
+					return ctx.Response.WriteAsync(text);
+				});
 				endpoints.MapRazorPages();
 			});
 		}
+
+		private string text = string.Empty;
+		private void append(params string[] msgs)
+		{
+			foreach (var msg in msgs)
+			{
+				text += msg + "\n";
+			}
+		}
+
 	}
 }
